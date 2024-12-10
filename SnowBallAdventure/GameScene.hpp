@@ -1,15 +1,25 @@
 ﻿# pragma once
 # include "Common.hpp"
+# include "Player.hpp"
+# include "SnowBall.hpp"
+# include "SnowEffect.hpp"
 
 class GameScene : public App::Scene {
 
 private:
-
+	Effect effect;
+	SnowBall snowBall { Vec2{60,400} };
 	Stopwatch stopwatch;
 	bool game_start = false;
-	double accumulator = 0.0;
-	double char_img_chang_time = 0.3;
-	int char_img_index = 0;
+	Player player { Vec2{ 60,412}};
+	int score = 0;
+
+	double score_timer = 0.0;
+	double snow_effect_timer = 0.0;
+	double snow_ball_throw_timer = 0.0;
+
+	const double SCORE_INCRMENT_TIME = 0.5;
+	const double SNOW_EFFECT_SPOWN_TIME = 0.2;
 
 public:
 

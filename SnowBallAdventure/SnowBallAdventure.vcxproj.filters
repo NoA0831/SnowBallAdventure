@@ -148,6 +148,12 @@
     <Filter Include="Source Files\Core\SnowBall">
       <UniqueIdentifier>{3d901d96-e8f3-4951-83ed-b6184177c29b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Core\Player">
+      <UniqueIdentifier>{6425e0d7-7d9c-4fac-9eab-f6476b146cfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Effecct">
+      <UniqueIdentifier>{ee000509-1af8-45dd-93c7-05c1adaa8964}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -838,6 +844,15 @@
     </ClInclude>
     <ClInclude Include="Enemy.hpp">
       <Filter>Source Files\Core\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.hpp">
+      <Filter>Source Files\Core\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="SnowBall.hpp">
+      <Filter>Source Files\Core\SnowBall</Filter>
+    </ClInclude>
+    <ClInclude Include="SnowEffect.hpp">
+      <Filter>Source Files\Effecct</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

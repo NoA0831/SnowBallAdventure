@@ -330,6 +330,9 @@
     <ClInclude Include="Common.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="GameScene.hpp" />
+    <ClInclude Include="Player.hpp" />
+    <ClInclude Include="SnowBall.hpp" />
+    <ClInclude Include="SnowEffect.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TitleScene.hpp" />
   </ItemGroup>
