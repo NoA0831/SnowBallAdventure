@@ -18,6 +18,9 @@ void Main() {
 	TextureAsset::Register(U"heart_half", U"imgs/heart_half.png");
 	TextureAsset::Register(U"heart_empty", U"imgs/heart_empty.png");
 
+	TextureAsset::Register(U"blue_star", U"imgs/blue_star.png");
+	TextureAsset::Register(U"yellow_star", U"imgs/yellow_star.png");
+
 	App manager;
 	manager.add<TitleScene>(State::Title);
 	manager.add<GameScene>(State::Game);

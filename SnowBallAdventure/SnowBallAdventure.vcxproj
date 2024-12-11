@@ -333,6 +333,7 @@
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="SnowBall.hpp" />
     <ClInclude Include="SnowEffect.hpp" />
+    <ClInclude Include="StarEffect.hpp" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="TitleScene.hpp" />
   </ItemGroup>

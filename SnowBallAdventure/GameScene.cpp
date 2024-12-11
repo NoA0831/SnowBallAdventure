@@ -23,10 +23,12 @@ void GameScene::update() {
 	else {
 		score_timer += Scene::DeltaTime();
 		snow_effect_timer += Scene::DeltaTime();
+		star_effect_timer += Scene::DeltaTime();
 
 		player.update();
 		snowBall.update();
 		effect.update();
+		star_effect.update();
 
 		if (KeySpace.down()) {
 			snowBall.throwBail(Cursor::Pos());
@@ -45,6 +47,16 @@ void GameScene::update() {
 				score++;
 			}
 			score_timer -= SCORE_INCRMENT_TIME;
+		}
+		//星エフェクトを定期的に発生
+		//表示する星の数はMAXで2コ
+		if (STAR_EFFECT_SPOWN_TIME <= star_effect_timer) {
+			if (star_effect.num_effects() < MAX_STAR_EFFECT_NUM) {
+				star_effect_timer -= STAR_EFFECT_SPOWN_TIME;
+				star_effect.add<StarEffect>(
+					Vec2{ (Scene::Width()) + 64,Random(15,150) }
+				);
+			}
 		}
 	}
 }

@@ -854,5 +854,8 @@
     <ClInclude Include="SnowEffect.hpp">
       <Filter>Source Files\Effecct</Filter>
     </ClInclude>
+    <ClInclude Include="StarEffect.hpp">
+      <Filter>Source Files\Effecct</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
