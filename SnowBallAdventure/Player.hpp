@@ -42,4 +42,7 @@ public:
 	int getMaxHp() const {
 		return MAX_HP;
 	}
+	Vec2 getPos() const {
+		return pos;
+	}
 };
