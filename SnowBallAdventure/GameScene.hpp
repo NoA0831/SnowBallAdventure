@@ -10,12 +10,13 @@ class GameScene : public App::Scene {
 private:
 	Effect effect;
 	Effect star_effect;
-	SnowBall snowBall { Vec2{60,400} };
 	Stopwatch stopwatch;
+	Array<SnowBall> snow_balls;
 	bool game_start = false;
 	Player player { Vec2{ 60,412}};
 	int score = 0;
 
+	double snow_ball_throw_power = 0.0;
 	double snow_ball_throw_angle = 0.0;
 
 	double score_timer = 0.0;
@@ -23,6 +24,11 @@ private:
 	double star_effect_timer = 0.0;
 	double snow_ball_throw_timer = 0.0;
 
+	const double INCREMENT_POWER = 0.5;
+	const double MAX_SNOW_BALL_THROW_POWER = 4.0;
+	const double MIN_SNOW_BALL_THROW_POWER = 0.5;
+
+	const int MAX_SNOW_BALL_NUM = 5;
 	const int MAX_STAR_EFFECT_NUM = 6;
 
 	const double CAN_THROW_MIN_ANGLE = -60_deg;

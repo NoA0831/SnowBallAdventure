@@ -31,12 +31,35 @@ void GameScene::update() {
 		star_effect_timer += Scene::DeltaTime();
 
 		player.update();
-		snowBall.update();
 		effect.update();
 		star_effect.update();
 
-		if (KeySpace.down()) {
-			snowBall.throwBall(Cursor::Pos());
+		for (auto& snow_ball : snow_balls) {
+			snow_ball.update();
+		}
+
+		//スペースキーを連打するたびに雪玉を投げる際のパワーが上昇
+		if (KeySpace.down() && snow_balls.size() < MAX_SNOW_BALL_NUM) {
+			Print << snow_ball_throw_power;
+			snow_ball_throw_power = Clamp(
+				snow_ball_throw_power + MAX_SNOW_BALL_THROW_POWER,
+				MIN_SNOW_BALL_THROW_POWER,
+				MAX_SNOW_BALL_THROW_POWER
+			);
+			Print << snow_ball_throw_power;
+		}
+		//雪玉を投げたらパワーをリセット
+		if (KeyEnter.down()&& snow_balls.size() < MAX_SNOW_BALL_NUM) {
+			Print << U"throw!!";
+			snow_balls.emplace_back(
+				player.getPos(),
+				snow_ball_throw_power,
+				Vec2{
+					Cos(snow_ball_throw_angle) * snow_ball_throw_power * 10,
+					Sin(snow_ball_throw_angle) * snow_ball_throw_power * 10
+				}
+			);
+			snow_ball_throw_power = MIN_SNOW_BALL_THROW_POWER;
 		}
 		//雪エフェクトを0.秒ごとに発生させる
 		if (SNOW_EFFECT_SPOWN_TIME <= snow_effect_timer) {
@@ -84,7 +107,6 @@ void GameScene::draw() const {
 
 	if (game_start) {
 		player.draw();
-		snowBall.draw();
 
 		//プレイヤーの残りHPをハートで描画
 		{
@@ -132,6 +154,10 @@ void GameScene::draw() const {
 		{
 			Vec2 pos = player.getPos().movedBy(50, 0);
 			TextureAsset(U"green_arrow").rotated(snow_ball_throw_angle).drawAt(pos);
+		}
+
+		for (const auto& snow_ball : snow_balls) {
+			snow_ball.draw();
 		}
 	}
 	else {
