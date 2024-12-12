@@ -63,6 +63,20 @@ void GameScene::update() {
 				);
 			}
 		}
+		//雪玉を投げる角度を計算
+		//投げることができる角度まで丸めて計算する
+		{
+			Vec2 mouse_pos = Cursor::PosF();
+			Vec2 player_pos = player.getPos();
+
+			//プレイヤーの位置からマウスの位置への角度を計算
+			double angle = Atan2(
+				mouse_pos.y - player_pos.y,
+				mouse_pos.x - player_pos.x
+			);
+			//上限値、下限値より超えてるとどちらかに丸める
+			snow_ball_throw_angle = Clamp(angle, CAN_THROW_MIN_ANGLE, CAN_THROW_MAX_ANGLE);
+		}
 	}
 }
 
@@ -114,23 +128,10 @@ void GameScene::draw() const {
 			}
 		}
 		//雪玉を投げる方向を示す矢印を描画する
-		//投げられない角度の場合は、矢印を上限、または下限で表示する
+		//プレイヤーと干渉するので、X軸方向に+50して描画
 		{
-			Vec2 mouse_pos = Cursor::PosF();
-			Vec2 player_pos = player.getPos();
-
-			//プレイヤーの位置からマウスの位置への角度を計算
-			double angle = Atan2(
-				mouse_pos.y - player_pos.y,
-				mouse_pos.x - player_pos.x
-			);
-			//上限値、下限値より超えてるとどちらかに丸める
-			angle = Clamp(angle, CAN_THROW_MIN_ANGLE, CAN_THROW_MAX_ANGLE);
-
-			Vec2 direction = Vec2{ Cos(angle),Sin(angle) };
-			Vec2 arrowTip = player_pos + direction * 100;
-
-			TextureAsset(U"green_arrow").rotated(angle).drawAt(player_pos.movedBy(50, 0));
+			Vec2 pos = player.getPos().movedBy(50, 0);
+			TextureAsset(U"green_arrow").rotated(snow_ball_throw_angle).drawAt(pos);
 		}
 	}
 	else {

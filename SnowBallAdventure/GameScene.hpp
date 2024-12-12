@@ -16,6 +16,8 @@ private:
 	Player player { Vec2{ 60,412}};
 	int score = 0;
 
+	double snow_ball_throw_angle = 0.0;
+
 	double score_timer = 0.0;
 	double snow_effect_timer = 0.0;
 	double star_effect_timer = 0.0;
