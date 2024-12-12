@@ -23,7 +23,10 @@ private:
 
 	const int MAX_STAR_EFFECT_NUM = 6;
 
-	const double STAR_EFFECT_SPOWN_TIME = 1.5;
+	const double CAN_THROW_MIN_ANGLE = -60_deg;
+	const double CAN_THROW_MAX_ANGLE = -5_deg;
+
+	const double STAR_EFFECT_SPOWN_TIME = 5.0;
 	const double SCORE_INCRMENT_TIME = 0.5;
 	const double SNOW_EFFECT_SPOWN_TIME = 0.08;
 

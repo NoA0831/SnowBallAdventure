@@ -17,10 +17,11 @@ struct SnowEffect : IEffect {
 		size { size }
 	{
 		base_x = pos.x;
-		speed_y = Random(2.0, 5.0);
-		amplitude = Random(10.0, 20.0);
+		speed_y = Random(2.0, 3.0);
+		amplitude = Random(10.0, 12.5);
 		phase = Random(0.0, Math::TwoPi);
-		color = HSV(Random(200.0, 240.0), 0.2, Random(0.8, 1.0));
+		color = ColorF{ U"#EAEFF3" };
+		//color = HSV(Random(200.0, 240.0), 0.2, Random(0.8, 1.0));
 	}
 
 	bool update(double t) override {
@@ -28,13 +29,11 @@ struct SnowEffect : IEffect {
 		pos.y += speed_y;
 		//Sin波を用いて水平位置を更新
 		pos.x = base_x + amplitude * Math::Sin( Scene::Time() * 2.0 + phase);
-		//徐々に透明に
-		//color.a = 1.0 - (t / 2.0);
 
 		if (pos.y > Scene::Height()) {
 			return true;
 		}
-		RectF{ pos.movedBy(1,1),size }.draw(Palette::Gray);
+		RectF{ pos.movedBy(0.8, 0.8),size }.draw(Palette::Gray);
 		RectF{ pos,size }.draw(color);
 	}
 };

@@ -1,59 +1,70 @@
-﻿# pragma once
-# include "Common.hpp"
+﻿#pragma once
+#include "Common.hpp"
 
 class SnowBall {
+private:
+	Vec2 pos;                     // 雪玉の位置
+	Vec2 velocity{ 0, 0 };        // 雪玉の速度
+	double radius = 32.0;         // 雪玉の半径
+	bool is_thrown = false;       // 雪玉が投げられているかどうか
+	double gravity = 0.5;         // 重力
 
-private :
-	Vec2 pos;
-	Vec2 velocity{ 0, 0 };
-	double radius = 32.0;
-	bool is_thrown = false;
-
-public :
-
+public:
 	SnowBall(const Vec2& pos)
-		: pos { pos } { }
+		: pos{ pos } { }
 
+	// 雪玉を成長させる
 	void grow() {
-		if (not is_thrown && KeySpace.down()) {
-			radius++;
+		if (not is_thrown) {
+			radius = Min(radius + 0.5, 64.0); // 最大サイズを64に制限
 		}
 	}
 
-	void throwBail(const Vec2& mousePos) {
+	// 雪玉を投げる
+	void throwBall(const Vec2& direction) {
 		if (not is_thrown) {
-			// 投げる方向を設定
-			Vec2 direction = (mousePos - pos).normalized();
-			velocity = direction * (radius * 2.0); // 半径に応じた速度
+			velocity = direction * (radius * 1.5); // 方向と半径に基づいた速度
 			is_thrown = true;
 		}
 	}
 
+	// 雪玉の更新処理
 	void update() {
 		if (is_thrown) {
+			velocity.y += gravity; // 重力を適用
 			pos += velocity;
 
-			const Rect window_rect { 0,0,WINDOW_SIZE.x,WINDOW_SIZE.y };
-
-			if (window_rect.contains(pos)) {
+			// 雪玉が画面外に出たらリセット
+			if (pos.y > Scene::Height() || pos.x < 0 || pos.x > Scene::Width()) {
 				reset();
 			}
 		}
 	}
+
 	// 雪玉のリセット
 	void reset() {
-		radius = 32.0;
-		is_thrown = true;
+		radius = 32.0;          // 半径をリセット
+		is_thrown = false;      // 状態をリセット
+		velocity = Vec2{ 0, 0 };
 	}
 
-	// 雪玉が投げられたかどうかを確認
+	// 雪玉が投げられているか
 	bool hasBeenThrown() const {
 		return is_thrown;
 	}
+
+	// 現在の位置を取得
+	Vec2 getPosition() const {
+		return pos;
+	}
+
+	// 現在の半径を取得
+	double getRadius() const {
+		return radius;
+	}
+
 	// 雪玉の描画
 	void draw() const {
-		if (is_thrown) {
-			TextureAsset(U"snowBall")(0, 0, 32, 32).scaled(1.4).drawAt(pos);
-		}
+		Circle{ pos, radius }.draw(Palette::White);
 	}
 };

@@ -21,6 +21,8 @@ void Main() {
 	TextureAsset::Register(U"blue_star", U"imgs/blue_star.png");
 	TextureAsset::Register(U"yellow_star", U"imgs/yellow_star.png");
 
+	TextureAsset::Register(U"green_arrow", U"imgs/green_arrow.png");
+
 	App manager;
 	manager.add<TitleScene>(State::Title);
 	manager.add<GameScene>(State::Game);

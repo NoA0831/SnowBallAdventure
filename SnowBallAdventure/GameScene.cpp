@@ -4,6 +4,11 @@ GameScene::GameScene(const InitData& init)
 	: IScene{ init }
 	{
 		stopwatch.start();
+		for (int i = 0; i < MAX_STAR_EFFECT_NUM / 2; i++) {
+			star_effect.add<StarEffect>(
+			Vec2{ Random(32,Scene::Width() - 32),Random(15,150)}
+			);
+		}
 	}
 
 void GameScene::update() {
@@ -31,7 +36,7 @@ void GameScene::update() {
 		star_effect.update();
 
 		if (KeySpace.down()) {
-			snowBall.throwBail(Cursor::Pos());
+			snowBall.throwBall(Cursor::Pos());
 		}
 		//雪エフェクトを0.秒ごとに発生させる
 		if (SNOW_EFFECT_SPOWN_TIME <= snow_effect_timer) {
@@ -57,6 +62,25 @@ void GameScene::update() {
 					Vec2{ (Scene::Width()) + 64,Random(15,150) }
 				);
 			}
+		}
+		//雪玉を投げる方向を示す矢印を描画する
+		//投げられない角度の場合は、矢印を上限、または下限で表示する
+		{
+			Vec2 mouse_pos = Cursor::PosF();
+			Vec2 player_pos = player.getPos();
+
+			//プレイヤーの位置からマウスの位置への角度を計算
+			double angle = Atan2(
+				mouse_pos.y - player_pos.y,
+				mouse_pos.x - player_pos.x
+			);
+			//上限値、下限値より超えてるとどちらかに丸める
+			angle = Clamp(angle, CAN_THROW_MIN_ANGLE, CAN_THROW_MAX_ANGLE);
+
+			Vec2 direction = Vec2{ Cos(angle),Sin(angle) };
+			Vec2 arrowTip = player_pos + direction * 100;
+			 
+			TextureAsset(U"green_arrow").rotated(angle).drawAt(player_pos.movedBy(50,0));
 		}
 	}
 }
