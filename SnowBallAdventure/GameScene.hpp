@@ -1,6 +1,7 @@
 ﻿# pragma once
 # include "Common.hpp"
 # include "Player.hpp"
+# include "IsInWindow.cpp"
 # include "SnowBall.hpp"
 # include "SnowEffect.hpp"
 # include "StarEffect.hpp"

@@ -154,6 +154,9 @@
     <Filter Include="Source Files\Effecct">
       <UniqueIdentifier>{ee000509-1af8-45dd-93c7-05c1adaa8964}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Core\Utils">
+      <UniqueIdentifier>{0c823494-eb87-4c4b-b8ac-3f2d29327c1b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -856,6 +859,9 @@
     </ClInclude>
     <ClInclude Include="StarEffect.hpp">
       <Filter>Source Files\Effecct</Filter>
+    </ClInclude>
+    <ClInclude Include="IsInWindow.cpp">
+      <Filter>Source Files\Core\Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

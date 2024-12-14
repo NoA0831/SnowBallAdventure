@@ -330,6 +330,7 @@
     <ClInclude Include="Common.hpp" />
     <ClInclude Include="Enemy.hpp" />
     <ClInclude Include="GameScene.hpp" />
+    <ClInclude Include="IsInWindow.cpp" />
     <ClInclude Include="Player.hpp" />
     <ClInclude Include="SnowBall.hpp" />
     <ClInclude Include="SnowEffect.hpp" />

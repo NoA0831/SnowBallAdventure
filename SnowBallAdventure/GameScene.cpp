@@ -100,6 +100,7 @@ void GameScene::update() {
 			//上限値、下限値より超えてるとどちらかに丸める
 			snow_ball_throw_angle = Clamp(angle, CAN_THROW_MIN_ANGLE, CAN_THROW_MAX_ANGLE);
 		}
+		//画面からはみ出た雪玉を削除する
 	}
 }
 
