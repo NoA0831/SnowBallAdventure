@@ -22,7 +22,7 @@ public:
 	}
 
 	// 現在の位置を取得
-	Vec2 getPosition() const {
+	Vec2 getPos() const {
 		return pos;
 	}
 

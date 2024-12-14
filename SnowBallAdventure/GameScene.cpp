@@ -38,16 +38,6 @@ void GameScene::update() {
 			snow_ball.update();
 		}
 
-		//スペースキーを連打するたびに雪玉を投げる際のパワーが上昇
-		if (KeySpace.down() && snow_balls.size() < MAX_SNOW_BALL_NUM) {
-			Print << snow_ball_throw_power;
-			snow_ball_throw_power = Clamp(
-				snow_ball_throw_power + MAX_SNOW_BALL_THROW_POWER,
-				MIN_SNOW_BALL_THROW_POWER,
-				MAX_SNOW_BALL_THROW_POWER
-			);
-			Print << snow_ball_throw_power;
-		}
 		//雪玉を投げたらパワーをリセット
 		if (KeyEnter.down()&& snow_balls.size() < MAX_SNOW_BALL_NUM) {
 			Print << U"throw!!";
@@ -65,7 +55,7 @@ void GameScene::update() {
 		if (SNOW_EFFECT_SPOWN_TIME <= snow_effect_timer) {
 			effect.add<SnowEffect>(
 				Vec2{ Random(0,WINDOW_SIZE.y),-100 },
-				Size{ 4,4 }
+				Size{ 2,2 }
 			);
 			snow_effect_timer -= SNOW_EFFECT_SPOWN_TIME;
 		}
@@ -100,13 +90,30 @@ void GameScene::update() {
 			//上限値、下限値より超えてるとどちらかに丸める
 			snow_ball_throw_angle = Clamp(angle, CAN_THROW_MIN_ANGLE, CAN_THROW_MAX_ANGLE);
 		}
-		//画面からはみ出た雪玉を削除する
+		//スペースキーを連打するたびに雪玉を投げる際のパワーが上昇
+		if (KeySpace.down() && snow_balls.size() < MAX_SNOW_BALL_NUM) {
+			Print << snow_ball_throw_power;
+
+			const double incremented_power = snow_ball_throw_power + INCREMENT_POWER;
+
+			if (incremented_power < MAX_SNOW_BALL_THROW_POWER) {
+				snow_ball_throw_power = incremented_power;
+			}
+		}
+		//画面外に出た雪玉を削除
+		snow_balls.remove_if([](const SnowBall& snow_ball) {
+			return isOutWindow(snow_ball.getPos());
+		});
+		Console << snow_ball_throw_power;
 	}
 }
 
 void GameScene::draw() const {
 
 	if (game_start) {
+		for (const auto& snow_ball : snow_balls) {
+			snow_ball.draw();
+		}
 		player.draw();
 
 		//プレイヤーの残りHPをハートで描画
@@ -155,10 +162,6 @@ void GameScene::draw() const {
 		{
 			Vec2 pos = player.getPos().movedBy(50, 0);
 			TextureAsset(U"green_arrow").rotated(snow_ball_throw_angle).drawAt(pos);
-		}
-
-		for (const auto& snow_ball : snow_balls) {
-			snow_ball.draw();
 		}
 	}
 	else {

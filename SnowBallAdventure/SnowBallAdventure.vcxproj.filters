@@ -860,7 +860,7 @@
     <ClInclude Include="StarEffect.hpp">
       <Filter>Source Files\Effecct</Filter>
     </ClInclude>
-    <ClInclude Include="IsInWindow.cpp">
+    <ClInclude Include="isOutWindow.cpp">
       <Filter>Source Files\Core\Utils</Filter>
     </ClInclude>
   </ItemGroup>
