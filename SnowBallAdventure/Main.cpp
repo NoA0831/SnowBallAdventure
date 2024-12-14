@@ -10,7 +10,12 @@ void Main() {
 
 	FontAsset::Register(U"bit-big",100,U"example/font/DotGothic16/DotGothic16-Regular.ttf", FontStyle::Bitmap);
 	FontAsset::Register(U"bit-mini", 20, U"example/font/DotGothic16/DotGothic16-Regular.ttf", FontStyle::Bitmap);
+
 	TextureAsset::Register(U"x-mas-player-1", U"imgs/x-mas-player-1.png");
+
+	TextureAsset::Register(U"snowman_red", U"imgs/snowman_red.png");
+	TextureAsset::Register(U"snowman_green", U"imgs/snowman_green.png");
+
 	TextureAsset::Register(U"snow_ball", U"imgs/snowball.png");
 	TextureAsset::Register(U"grand-snow", U"imgs/grand_snow.png");
 
