@@ -39,8 +39,8 @@ void GameScene::update() {
 		}
 
 		//雪玉を投げたらパワーをリセット
-		if (KeyEnter.down()&& snow_balls.size() < MAX_SNOW_BALL_NUM) {
-			Print << U"throw!!";
+		//Enterキー押すかマウスクリックで雪玉を発射
+		if ((MouseL.down() || KeyEnter.down()) && snow_balls.size() < MAX_SNOW_BALL_NUM) {
 			snow_balls.emplace_back(
 				player.getPos(),
 				snow_ball_throw_power,
@@ -90,9 +90,8 @@ void GameScene::update() {
 			//上限値、下限値より超えてるとどちらかに丸める
 			snow_ball_throw_angle = Clamp(angle, CAN_THROW_MIN_ANGLE, CAN_THROW_MAX_ANGLE);
 		}
-		//スペースキーを連打するたびに雪玉を投げる際のパワーが上昇
-		if (KeySpace.down() && snow_balls.size() < MAX_SNOW_BALL_NUM) {
-			Print << snow_ball_throw_power;
+		//スペースキーを押し続けると雪玉を投げる際のパワーが上昇
+		if (KeySpace.pressed() && snow_balls.size() < MAX_SNOW_BALL_NUM) {
 
 			const double incremented_power = snow_ball_throw_power + INCREMENT_POWER;
 
@@ -104,7 +103,6 @@ void GameScene::update() {
 		snow_balls.remove_if([](const SnowBall& snow_ball) {
 			return isOutWindow(snow_ball.getPos());
 		});
-		Console << snow_ball_throw_power;
 	}
 }
 
@@ -163,6 +161,36 @@ void GameScene::draw() const {
 			Vec2 pos = player.getPos().movedBy(50, 0);
 			TextureAsset(U"green_arrow").rotated(snow_ball_throw_angle).drawAt(pos);
 		}
+		// 雪玉を投げる際のパワーをプログレスバーのように表示
+		{
+			const int box_num = 12;                 
+			const int box_space = 15;              
+			const Size box_size{ 10, 20 };         
+			const Vec2 start_pos{ 170, 30 };       
+			const double power_ratio = (snow_ball_throw_power - MIN_SNOW_BALL_THROW_POWER) / (MAX_SNOW_BALL_THROW_POWER - MIN_SNOW_BALL_THROW_POWER); // パワーの割合
+
+			for (int i = 0; i < box_num; i++) {
+				Vec2 box_pos = start_pos.movedBy(i * box_space, 0);
+
+				//現在のボックスがパワー割合に対応して満たされているか判定
+				//満たされていない場合は黒色で塗りつぶす
+				if (power_ratio > (double(i) / box_num)) {
+					// 寒色から暖色へグラデーションを生成
+					ColorF box_color = ColorF(
+						double(i) / box_num,			   // 赤の成分（寒色→暖色）
+						0.5 + (0.5 - double(i) / box_num), // 緑の成分（少し暖色に寄る）
+						1.0 - double(i) / box_num          // 青の成分（寒色）
+					);
+					RectF{ box_pos, box_size }.draw(box_color);
+				}
+				else {
+					RectF{ box_pos, box_size }.draw(Palette::Black);
+				}
+				// 枠線はどのボックスでも描画
+				RectF{ box_pos, box_size }.drawFrame(1.5, 0.0, Palette::White);
+			}
+		}
+
 	}
 	else {
 		int remaining_time = (3 - stopwatch.s());

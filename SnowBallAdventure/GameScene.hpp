@@ -22,7 +22,7 @@ private:
 	double star_effect_timer = 0.0;
 	double snow_ball_throw_timer = 0.0;
 
-	const double INCREMENT_POWER = 0.1;
+	const double INCREMENT_POWER = 0.05;
 	const double MAX_SNOW_BALL_THROW_POWER = 3.0;
 	const double MIN_SNOW_BALL_THROW_POWER = 1.2;
 
